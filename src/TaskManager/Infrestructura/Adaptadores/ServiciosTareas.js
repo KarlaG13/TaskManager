@@ -1,22 +1,52 @@
+import axios from 'axios';
+
 class ServiciosTareas {
-    ObtenerTareas() {
+    constructor() {
+        this.apiUrl = 'https://documenter.getpostman.com/view/23463830/2sA3QqgsyA'; // Reemplaza con la URL base de tu API
+    }
+
+    async ObtenerTareas() {
         console.log("Obteniendo tareas...");
-        return "Obtenido";
+        try {
+            const response = await axios.get(`${this.apiUrl}/tareas`);
+            return response.data;
+        } catch (error) {
+            console.error('Error al obtener las tareas:', error);
+            throw error;
+        }
     }
 
-    CrearTareas(tarea) {
+    async CrearTareas(tarea) {
         console.log(`Creando tarea: ${tarea}`);
-        return "Creado";
+        try {
+            const response = await axios.post(`${this.apiUrl}/tareas`, { nombre: tarea });
+            return response.data;
+        } catch (error) {
+            console.error('Error al crear la tarea:', error);
+            throw error;
+        }
     }
 
-    ActualizarTareas(id, nombre, completado) {
+    async ActualizarTareas(id, nombre, completado) {
         console.log(`Actualizando tarea ${id} con nombre ${nombre} y estado ${completado}`);
-        return 'Actualizado';
+        try {
+            const response = await axios.put(`${this.apiUrl}/tareas/${id}`, { nombre, completado });
+            return response.data;
+        } catch (error) {
+            console.error('Error al actualizar la tarea:', error);
+            throw error;
+        }
     }
 
-    EliminarTareas(id) {
+    async EliminarTareas(id) {
         console.log(`Eliminando tarea con id ${id}`);
-        return 'Eliminado';
+        try {
+            const response = await axios.delete(`${this.apiUrl}/tareas/${id}`);
+            return response.data;
+        } catch (error) {
+            console.error('Error al eliminar la tarea:', error);
+            throw error;
+        }
     }
 }
 
